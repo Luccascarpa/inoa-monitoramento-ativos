@@ -9,7 +9,7 @@ class Asset (models.Model):
     symbol = models.CharField("Asset Symbol", max_length=10, unique=True)
     inferior_limit = models.DecimalField("Lower Limit", max_digits=10, decimal_places=2)
     superior_limit = models.DecimalField("Upper Limit",max_digits=10, decimal_places=2)
-    frequency = models.DecimalField("Checking frequency (minutes)", blank=True,null=True)
+    frequency = models.PositiveIntegerField("Checking frequency (minutes)", default=5)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -19,7 +19,7 @@ class Asset (models.Model):
 class PriceHistory(models.Model):
     # Model to store the price history of the assets being tracked
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-    price = models.FloatField("Price", max_digits=10, decimal_places=2)
+    price = models.DecimalField("Price", max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField("Price timestamp",auto_now_add=True)
 
     def __str__(self):
