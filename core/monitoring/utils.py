@@ -1,7 +1,7 @@
 import yfinance as yf
 from decimal import Decimal
 
-from models import Asset, PriceHistory
+from .models import Asset, PriceHistory
 
 from django.conf import settings
 from django.core.mail import send_mail

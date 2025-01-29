@@ -1,8 +1,8 @@
 # using celery as scheduler
 
 from celery import shared_task
-from models import Asset
-from utils import check_and_save_price
+from .models import Asset
+from .utils import check_and_save_price
 
 
 
