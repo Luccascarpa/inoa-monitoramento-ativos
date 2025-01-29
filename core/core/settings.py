@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from celery.schedules import crontab
 
 # load env variables from .env file
 load_dotenv()
@@ -140,6 +141,12 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL','redis://localhost:6379/0')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+#CELERY_BEAT_SCHEDULE = {
+#   'check_prices_every_minute': {
+#       'task': 'monitoring.tasks.check_all_assets',
+#       'schedule': crontab(minute='*'),
+#   },
+#}
