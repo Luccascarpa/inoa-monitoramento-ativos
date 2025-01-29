@@ -1,0 +1,27 @@
+{% extends 'monitoring/base.html' %}
+
+{% block content %}
+  <h2>Histórico de Preços: {{ asset.symbol }}</h2>
+
+  <form method="GET">
+    {{ filter_form.as_p }}
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Data/Hora</th>
+        <th>Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in price_history %}
+      <tr>
+        <td>{{ item.timestamp }}</td>
+        <td>{{ item.price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

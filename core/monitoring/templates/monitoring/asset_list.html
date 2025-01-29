@@ -1,0 +1,34 @@
+{% extends 'monitoring/base.html' %}
+
+{% block content %}
+  <h2>Lista de Ativos</h2>
+  <a href="{% url 'asset_create' %}">[ Novo Ativo ]</a>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Símbolo</th>
+        <th>Nome</th>
+        <th>Limites</th>
+        <th>Period.</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for asset in assets %}
+      <tr>
+        <td>{{ asset.id }}</td>
+        <td>{{ asset.symbol }}</td>
+        <td>{{ asset.name }}</td>
+        <td>{{ asset.inferior_limit }} - {{ asset.superior_limit }}</td>
+        <td>{{ asset.frequency }} min</td>
+        <td>
+          <a href="{% url 'asset_edit' asset.id %}">Editar</a> |
+          <a href="{% url 'asset_delete' asset.id %}">Excluir</a> |
+          <a href="{% url 'price_history' asset.id %}">Histórico</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
