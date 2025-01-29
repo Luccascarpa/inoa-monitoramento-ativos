@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: django_app
+    restart: always
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis:6.0
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    container_name: celery_worker
+    restart: always
+    depends_on:
+      - redis
+      - web
+    command: celery -A core worker --loglevel=info
+    env_file:
+      - .env 
+    volumes:
+      - .:/app
+
+  celery-beat:
+    build: .
+    container_name: celery_beat
+    restart: always
+    depends_on:
+      - redis
+      - web
+      - celery
+    command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
