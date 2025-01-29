@@ -11,7 +11,7 @@ def fetch_asset_current_price(symbol: str) -> Decimal:
     try:
         # getting data througn the symbole and it's current price
         asset = yf.Ticker(symbol)
-        price = asset.info.get('regularMarketPrice')
+        price = asset.info.get('currentPrice')
 
         if not price:
             raise ValueError(f"Can't obtain {symbol}'s price. Check if the symbol is correct")
@@ -25,10 +25,7 @@ def fetch_asset_current_price(symbol: str) -> Decimal:
 def send_alert_email(asset: Asset, price: Decimal, allert_type:str):
     # Emails alerting for buying or selling
     subject = f'[Atenção] Ativo {asset.symbol} - {allert_type.upper()}'
-    body = f''''
-            O ativo {asset.symbol} ({asset.name}) atingiu o preço de R${price} \nLimite configurado: {asset.inferior_limit} - {asset.superior_limit}\n\n Sugestão: {str.upper(allert_type)}!
-            '''
-    
+    body = f'O ativo {asset.symbol} ({asset.name}) atingiu o preço de R${round(price, 2)} \nLimite configurado: {asset.inferior_limit} - {asset.superior_limit}\n\n Sugestão: {str.upper(allert_type)}!'
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email_list = [settings.EMAIL_HOST_USER]
 
@@ -38,7 +35,9 @@ def check_and_save_price(asset: Asset):
     # Checks and saves assets current price, and sends email in case it crosses limits
 
     price = fetch_asset_current_price(asset.symbol)
-    PriceHistory.objects.create(asset, price)
+    print(asset.symbol)
+    print(price)
+    PriceHistory.objects.create(asset=asset, price=price)
 
     # If price cross lower limt, sugest buying
     if price <= asset.inferior_limit:
