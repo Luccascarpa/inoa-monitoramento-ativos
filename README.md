@@ -52,7 +52,7 @@ docker-compose exec web python manage.py createsuperuser
 Acesse `http://127.0.0.1:8000/admin` e faça login.
 
 ### **2️⃣ Cadastrar E-mail para Alertas**
-- Acesse `http://127.0.0.1:8000/alert-emails/` para ver a lista de e-mails cadastrados.
+- Acesse `http://127.0.0.1:8000/monitoring/alert-emails/` para ver a lista de e-mails cadastrados.
 - Clique em "Adicionar Novo E-mail" para cadastrar um e-mail que receberá os alertas.
 - Para remover um e-mail, clique no botão "Remover" ao lado do e-mail cadastrado.
 
@@ -110,6 +110,7 @@ docker-compose logs --tail=50 celery-beat
 - Controle de acesso para diferentes usuários, medidas de autenticação/segurança
 - Gráficos para melhorar a visualização dos dados
 - Melhorar a gestão dos erros na aplicação
+- Restringir o cadastro de ativos a ativos existentes
 
 Desenvolvido por [Lucca Scarpa](https://github.com/Luccascarpa) 🚀
 
