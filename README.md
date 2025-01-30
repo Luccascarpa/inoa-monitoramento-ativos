@@ -9,6 +9,7 @@ Este projeto é um sistema para monitorar ativos da B3, coletando preços period
 ```bash
   git clone https://github.com/Luccascarpa/inoa-monitoramento-ativos.git
   cd inoa-monitoramento-ativos
+  cd core
 ```
 
 ### **2️⃣ Configure as Variáveis de Ambiente**
@@ -24,8 +25,6 @@ DEFAULT_FROM_EMAIL=<seu-email@gmail.com>
 EMAIL_HOST_PASSWORD=<senha-de-aplicação>
 EMAIL_HOST_USER=seu-email@gmail.com>
 ```
-
-> 📌 Os e-mails que receberão os alertas devem ser configurado pelos usuários no sistema.
 
 ### **3️⃣ Rode a Aplicação com Docker**
 
