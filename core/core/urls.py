@@ -16,8 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from monitoring import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('monitoring/', include('monitoring.urls')),  # URLs do app Monitoring
+    path('monitoring/', include('monitoring.urls')),
+    path('alert-emails/', views.alert_emails_list, name='alert_emails_list'),
+    path('alert-emails/create/', views.alert_emails_create, name='alert_emails_create'),
+    path('alert-emails/delete/<int:email_id>/', views.alert_email_delete, name='alert_email_delete'),
+    path('', views.list_endpoints, name='home'),
 ]

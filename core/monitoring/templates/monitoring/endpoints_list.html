@@ -1,0 +1,10 @@
+{% extends 'monitoring/base.html' %}
+
+{% block content %}
+<h2>Endpoints Disponíveis</h2>
+<ul>
+    {% for url in urls %}
+        <li><a href="{{ url }}">{{ url }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
