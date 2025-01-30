@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de E-mails para Alertas</h2>
+<a href="{% url 'alert_emails_create' %}">Adicionar Novo E-mail</a>
+<ul>
+    {% for email in emails %}
+        <li>{{ email.email }} 
+            <form action="{% url 'alert_email_delete' email.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Remover</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -33,3 +33,11 @@ class PriceHistory(models.Model):
 
     def __str__(self):
         return f'{self.asset.symbol} at {self.timestamp} = R${self.price}'
+    
+
+class AlertEmails(models.Model):
+    # Store emails that will receive the alerts
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.email

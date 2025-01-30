@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
-from .models import Asset, PriceHistory
-from .forms import AssetForm, PriceHistoryFilterForm
+from .models import Asset, PriceHistory, AlertEmails
+from .forms import AssetForm, PriceHistoryFilterForm, AlertEmailsForm
 
 def asset_list(request):
     assets = Asset.objects.all()
@@ -56,3 +56,28 @@ def price_history(request, asset_id):
         'price_history': queryset,
         'filter_form': filter_form
     })
+
+def alert_emails_list(r):
+    # List all emails
+    emails = AlertEmails.objects.all()
+    return render(r, 'monitoring/alert_emails_list.html', {'emails': emails})
+
+def alert_emails_create(r):
+    # Add new email to the alerts list
+    if r.method == 'POST':
+        form = AlertEmailsForm(r.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(r, 'E-mail adicionado!')
+            return redirect(reverse("alert_email_list"))
+    else:
+        form = AlertEmailsForm()
+
+    return render(r, 'monitoring/alert_emails_form.html')
+
+def alert_email_delete(r, email_id):
+    # Delete emils from the list
+    recipient = AlertEmails.objects.get(id=email_id)
+    recipient.delete()
+    messages.success(r, "E-mail removido!")
+    return redirect(reverse('alert_emails_list'))

@@ -1,7 +1,7 @@
 import yfinance as yf
 from decimal import Decimal
 
-from .models import Asset, PriceHistory
+from .models import Asset, PriceHistory, AlertEmails
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -27,9 +27,10 @@ def send_alert_email(asset: Asset, price: Decimal, allert_type:str):
     subject = f'[Atenção] Ativo {asset.symbol} - {allert_type.upper()}'
     body = f'O ativo {asset.symbol} ({asset.name}) atingiu o preço de R${round(price, 2)} \nLimite configurado: {asset.inferior_limit} - {asset.superior_limit}\n\n Sugestão: {str.upper(allert_type)}!'
     from_email = settings.DEFAULT_FROM_EMAIL
-    to_email_list = [settings.EMAIL_HOST_USER]
+    to_email_list = list(AlertEmails.objects.values_list('email', flat=True))
 
-    send_mail(subject,body,from_email,to_email_list)
+    if to_email_list:
+        send_mail(subject,body,from_email,to_email_list)
     
 def check_and_save_price(asset: Asset):
     # Checks and saves assets current price, and sends email in case it crosses limits
