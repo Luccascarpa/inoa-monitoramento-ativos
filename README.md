@@ -1,6 +1,6 @@
 # INOA - Monitoramento de Ativos
 
-Este projeto é um sistema para monitorar ativos da B3, coletando preços periodicamente e enviando alertas por e-mail.
+Este projeto é um sistema para monitorar ativos, coletando preços periodicamente de uma fonte pública e enviando alertas por e-mail.
 
 ## Como Rodar o Projeto
 
@@ -14,7 +14,7 @@ Este projeto é um sistema para monitorar ativos da B3, coletando preços period
 
 ### **2️⃣ Configure as Variáveis de Ambiente**
 
-Crie um arquivo `.env` na raiz do projeto com:
+Crie um arquivo `.env` na raiz do projeto (pasta core) com:
 
 ```env
 EMAIL_HOST=smtp.gmail.com
